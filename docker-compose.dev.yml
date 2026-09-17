@@ -1,0 +1,21 @@
+services:
+  mock-api:
+    build: ./mock-api
+    container_name: book-catalog-api-dev
+    ports:
+      - "3000:3000"
+
+  web-dev:
+    image: node:20-alpine
+    container_name: book-catalog-web-dev
+    working_dir: /app
+    depends_on:
+      - mock-api
+    environment:
+      VITE_PROXY_TARGET: http://mock-api:3000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "5173:5173"

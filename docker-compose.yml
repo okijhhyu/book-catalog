@@ -1,0 +1,19 @@
+services:
+  api:
+    build: ./mock-api
+    container_name: book-catalog-api
+    environment:
+      # Ключ-эмулятор smspilot.ru: реальной отправки SMS не происходит.
+      SMSPILOT_API_KEY: ${SMSPILOT_API_KEY:-XXXXXXXXXXXXYYYYYYYYYYYYZZZZZZZZXXXXXXXXXXXXYYYYYYYYYYYYZZZZZZZZ}
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+
+  web:
+    build: .
+    container_name: book-catalog-web
+    depends_on:
+      - api
+    ports:
+      - "8080:80"

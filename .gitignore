@@ -1,0 +1,6 @@
+node_modules
+dist
+mock-api/node_modules
+mock-api/uploads
+.env
+*.log
